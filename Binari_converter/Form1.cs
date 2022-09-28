@@ -19,9 +19,19 @@ namespace Binari_converter
 
                 for(double i = Math.Pow( 2 ,Convert.ToDouble( textBox1.Text.Length - 1 )); i >= 1; i = i / 2 ) {
 
-                    if (textBox1.Text[it] != '0') resultadodecimal = resultadodecimal + i;                   
+                    try
+                    {
+                        if (textBox1.Text[it] != '0') resultadodecimal = resultadodecimal + i;
+
+                        it++;
+                    }
+                    catch (Exception ex)
+                    {   
+                        MessageBox.Show("Error" + ex.ToString());
+                        return;
+                    }
+
                     
-                    it++;
                 }
 
                 textBox2.Text = resultadodecimal.ToString();
@@ -31,8 +41,23 @@ namespace Binari_converter
 
             if ( radioButton2.Checked == true)
             {
-                int numero = Convert.ToInt32(textBox1.Text);
-                int resto = 0;
+                System.UInt64 numero = 0;
+                try
+                {   
+                    numero = Convert.ToUInt64(textBox1.Text);
+                    
+                }
+                catch( OverflowException ex)
+                {
+                    MessageBox.Show("Error " + ex.ToString() + " Máximo 64 bits = 18446744073709551615");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error" + ex.ToString());                    
+                }
+                
+                System.UInt64 resto = 0;                
+
                 string resultado = "";
 
                 do
